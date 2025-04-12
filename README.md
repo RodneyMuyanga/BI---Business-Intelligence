@@ -17,3 +17,5 @@ Projektet fokuserer på:
     Tydelig præsentation og forklaring af hver graf
 
 Koden er designet med modularitet og brugervenlighed i fokus, og kan nemt udvides med flere datakilder og visualiseringstyper.
+
+IKKE ALt virker som det skal, men fixer det.
