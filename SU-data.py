@@ -2,18 +2,18 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # paths 
-file_stipend = r'C:\skole\4Semester\BI\SU stipendier og lån (mio. kr.).xlsx'
-file_antal = r'C:\skole\4Semester\BI\Antal støttemodtagere og låntagere.xlsx'
-file_aarsvaerk = r'C:\skole\4Semester\BI\Støtteårsværk.xlsx'
+file_stipend = 'data/SU stipendier og lån (mio. kr.).xlsx'
+file_antal = 'data/Antal støttemodtagere og låntagere.xlsx'
+file_aarsvaerk = 'data/Støtteårsværk.xlsx'
 
 # function to clean and normalize a dataframe
 def clean_df(df):
     df.columns = df.columns.str.strip()
     df.columns = df.columns.str.replace(r'\n', '', regex=True)
-    df.columns = df.columns.str.replace(r'[^\x00-\x7F]+', '', regex=True)  # Remove non-ASCII characters
+    df.columns = df.columns.str.replace(r'[^\x00-\x7F]+', '', regex=True)  # remove non-ASCII characters
     df.columns = df.columns.str.replace(' ', '_')
     df.rename(columns={df.columns[0]: 'Aar'}, inplace=True)
-    df = df[pd.to_numeric(df['Aar'], errors='coerce').notna()]  # Remove non-numeric year rows
+    df = df[pd.to_numeric(df['Aar'], errors='coerce').notna()]  # remove non numeric year rows
     df['Aar'] = df['Aar'].astype(int)
     return df
 
