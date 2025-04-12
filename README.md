@@ -1,16 +1,19 @@
-# BI---Business-Inteligence
-📊 Business Intelligence (BI) Project  This repository is dedicated to exploring and implementing Business Intelligence (BI) solutions.
-##Purpose
+Denne branch indeholder mit mini-projekt om gennemsnitsløn i Danmark, hvor jeg arbejder med dataindsamling, rensning og visualisering i Python ved brug af Streamlit.
 
-BI turns raw data into insights to support smarter business decisions.
-Repo Use
+Projektet fokuserer på:
 
-We’ll use this repo to:
+    Indlæsning af u- og semistrukturerede .txt-filer udtrukket fra danske hjemmesider (f.eks. Alt.dk og Stadsrevisionen.dk)
 
-    Collect and analyze data
+    Konvertering af rå tekst til struktureret data (navn + løn)
 
-    Build dashboards and reports
+    Visualisering af:
 
-    Collaborate on solutions
+        👥 Gennemsnitsløn fordelt på køn (bar chart)
 
-    Document our work for the teache
+        💼 Løn for 65 forskellige jobs (pie chart)
+
+        📈 Løn fordelt på aldersgrupper (line chart)
+
+    Tydelig præsentation og forklaring af hver graf
+
+Koden er designet med modularitet og brugervenlighed i fokus, og kan nemt udvides med flere datakilder og visualiseringstyper.
