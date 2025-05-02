@@ -122,3 +122,66 @@ st.pyplot(fig)
 df_combined[["alcohol", "residual sugar", "quality"]].corr()
 
 st.markdown("**The scatter plot and correlation analysis show that alcohol content has a positive correlation with wine quality. This means that, generally, wines with higher alcohol levels tend to be rated higher in quality. On the other hand, residual sugar does not show a clear relationship with wine quality. The correlation is very weak, and the scatter plot shows no clear pattern. In conclusion, alcohol content appears to influence quality more than sugar does – especially in red wines.**")
+
+st.title("Mini Project 2: Data Exploration and Visualisation - Task 11")
+st.subheader("Outlier Detection in Residual Sugar")
+
+# IQR-metoden
+Q1 = df_combined["residual sugar"].quantile(0.25)
+Q3 = df_combined["residual sugar"].quantile(0.75)
+IQR = Q3 - Q1
+
+lower_bound = Q1 - 1.5 * IQR
+upper_bound = Q3 + 1.5 * IQR
+
+# Find outliers
+outliers = df_combined[(df_combined["residual sugar"] < lower_bound) | 
+                       (df_combined["residual sugar"] > upper_bound)]
+
+st.write(f"Number of outliers found: {len(outliers)}")
+st.write("Outlier rows (showing first 5):")
+st.write(outliers.head())
+
+# Fjern outliers
+df_cleaned = df_combined.drop(outliers.index)
+st.write(f"New dataset size after removing outliers: {df_cleaned.shape}")
+
+st.markdown("""
+**Explanation – Outlier Removal in 'Residual Sugar':**  
+To improve data quality, we analyzed the `residual sugar` feature for outliers using the IQR (Interquartile Range) method.  
+Values that were far outside the typical range (below Q1 - 1.5×IQR or above Q3 + 1.5×IQR) were identified as outliers.  
+
+We found **118 outliers**, mostly wines with very high sugar content (e.g. above 17–20 g/dm³), which are rare and can skew the analysis.  
+These rows were removed to ensure the dataset better represents the main distribution of wines.  
+
+After removing the outliers, the dataset was reduced from **6497 to 6379 rows**.  
+This step helps improve the robustness of further statistical analysis.
+""")
+
+
+st.title("Mini Project 2: Data Exploration and Visualisation - Task 12")
+st.subheader("Remove Weak or Redundant Features")
+
+# Korrelationsmatrix
+corr_matrix = df_cleaned.corr(numeric_only=True)
+st.write("Correlation Matrix:")
+st.dataframe(corr_matrix.round(2))  # runder så det er lettere at læse
+
+# Valgte kolonner at fjerne – fx pga. lav korrelation med 'quality' eller høj indbyrdes korrelation
+columns_to_drop = ["density", "free sulfur dioxide", "citric acid"]
+
+st.write("Removed columns (based on correlation analysis):")
+st.write(columns_to_drop)
+
+df_reduced = df_cleaned.drop(columns=columns_to_drop)
+st.write(f"New dataset shape: {df_reduced.shape}")
+
+st.markdown("""
+**Explanation:**  
+The three columns removed had either a weak correlation with wine quality or a strong correlation with other independent variables.  
+- `"density"` was strongly related to both `"residual sugar"` and `"alcohol"`, making it redundant.  
+- `"free sulfur dioxide"` was highly correlated with `"total sulfur dioxide"`, so one was removed.  
+- `"citric acid"` had little to no impact on wine quality and was therefore excluded.  
+
+This cleaning step helps reduce multicollinearity and simplifies the dataset for future analysis, such as PCA or machine learning models.
+""")
