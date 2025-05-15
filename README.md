@@ -53,7 +53,7 @@ Visualiseringen gør det nemt at sammenligne udviklingen og se hvor huslejen sti
 ### Supervised Machine Learning: Salary Prediction (Linear Regression)
 We applied linear regression to predict the monthly income of employees. Linear regression was chosen because it is a simple and interpretable supervised learning method that allows us to analyze the relationship between employee attributes and salary. The method was also explicitly required by the assignment.
 
-Employee Attrition Analysis:
+### Employee Attrition Analysis:
 We chose a Decision Tree classifier for predicting employee attrition. Decision Trees are intuitive and easy to interpret, making them suitable for explaining which employee features influence attrition. The model also handles both numerical and categorical data well and provides visualizations that help understand feature importance.
 
 ## How accurate is your solution of prediction? Explain the meaning of the quality measures. 
@@ -64,7 +64,7 @@ R² (coefficient of determination) shows how much of the variance in salary can 
 
 Mean Squared Error (MSE) is the average of the squared differences between the actual and predicted values. A lower MSE means the model is more accurate.
 
-
+### Decision Tree
 The Decision Tree model achieved an accuracy of 81.18%, indicating it correctly predicts attrition status for about 81 out of 100 employees.
 
 However, due to class imbalance (more employees stay than leave), accuracy alone is insufficient. Looking at class-specific metrics:
@@ -79,7 +79,7 @@ This shows the model detects some true attritions but misses many (false negativ
 ### Supervised Machine Learning: Salary Prediction (Linear Regression)
 The linear model sometimes gave unrealistically low salary predictions, especially for experienced profiles. This may be due to linear regression’s limitations in capturing non-linear relationships and overlapping features (e.g., age and total working years). A more advanced model like Random Forest Regressor could offer better results. Additionally, normalizing input values and selecting more relevant features might improve accuracy.
 
-
+### Attrition
 The top three factors influencing attrition, based on feature importance in the decision tree, are:
 
 OverTime_Yes (importance: 0.218): Employees working overtime are more likely to leave, suggesting work-life imbalance is a key reason.
@@ -103,6 +103,7 @@ Engineer new features capturing employee engagement, satisfaction, or external m
 Collect more data on managerial support, work environment, or employee sentiment for richer analysis.
 
 ## Which work positions and departments are in higher risk of losing employees?
+### Attricion
 From the correlation analysis:
 
 Positions such as Sales Representatives and Laboratory Technicians have positive correlation with attrition, indicating higher risk.
