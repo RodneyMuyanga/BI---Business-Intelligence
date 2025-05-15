@@ -53,6 +53,9 @@ Visualiseringen gør det nemt at sammenligne udviklingen og se hvor huslejen sti
 ### Supervised Machine Learning: Salary Prediction (Linear Regression)
 We applied linear regression to predict the monthly income of employees. Linear regression was chosen because it is a simple and interpretable supervised learning method that allows us to analyze the relationship between employee attributes and salary. The method was also explicitly required by the assignment.
 
+Employee Attrition Analysis:
+We chose a Decision Tree classifier for predicting employee attrition. Decision Trees are intuitive and easy to interpret, making them suitable for explaining which employee features influence attrition. The model also handles both numerical and categorical data well and provides visualizations that help understand feature importance.
+
 ## How accurate is your solution of prediction? Explain the meaning of the quality measures. 
 ### Supervised Machine Learning: Salary Prediction (Linear Regression)
 The linear regression model achieved an R²-score of 0.89, meaning it explained 89% of the variance in income in the dataset. The Mean Squared Error (MSE) was approximately 2.3 million (in dataset units).
@@ -61,13 +64,50 @@ R² (coefficient of determination) shows how much of the variance in salary can 
 
 Mean Squared Error (MSE) is the average of the squared differences between the actual and predicted values. A lower MSE means the model is more accurate.
 
+
+The Decision Tree model achieved an accuracy of 81.18%, indicating it correctly predicts attrition status for about 81 out of 100 employees.
+
+However, due to class imbalance (more employees stay than leave), accuracy alone is insufficient. Looking at class-specific metrics:
+
+Precision (attrition = Yes): 0.35 — Among employees predicted to leave, 35% were actually leaving.
+
+Recall (attrition = Yes): 0.43 — The model correctly identified 43% of all employees who actually left.
+
+This shows the model detects some true attritions but misses many (false negatives) and sometimes falsely predicts attrition (false positives).
+
 ## Which are the most decisive factors for quitting a job? Why do people quit their job? 
 ### Supervised Machine Learning: Salary Prediction (Linear Regression)
 The linear model sometimes gave unrealistically low salary predictions, especially for experienced profiles. This may be due to linear regression’s limitations in capturing non-linear relationships and overlapping features (e.g., age and total working years). A more advanced model like Random Forest Regressor could offer better results. Additionally, normalizing input values and selecting more relevant features might improve accuracy.
 
+
+The top three factors influencing attrition, based on feature importance in the decision tree, are:
+
+OverTime_Yes (importance: 0.218): Employees working overtime are more likely to leave, suggesting work-life imbalance is a key reason.
+
+MonthlyIncome (importance: 0.203): Lower income correlates with higher attrition, indicating dissatisfaction with pay affects quitting decisions.
+
+TotalWorkingYears (importance: 0.107): Employees with fewer total working years tend to leave more, showing that less experienced staff may be less committed or seeking better opportunities.
+
+These indicate that workload, compensation, and experience are the main drivers of attrition in this dataset.
+
 ## What could be done for further improvement of the accuracy of the models? 
 
+Apply more advanced algorithms such as Random Forests or Gradient Boosting, which typically improve predictive power.
+
+Use oversampling techniques like SMOTE to balance the dataset and help the model learn minority class patterns better.
+
+Perform hyperparameter tuning and cross-validation to optimize model complexity and avoid overfitting.
+
+Engineer new features capturing employee engagement, satisfaction, or external market factors.
+
+Collect more data on managerial support, work environment, or employee sentiment for richer analysis.
+
 ## Which work positions and departments are in higher risk of losing employees?
+From the correlation analysis:
+
+Positions such as Sales Representatives and Laboratory Technicians have positive correlation with attrition, indicating higher risk.
+
+The Sales Department shows a positive correlation with attrition, suggesting employees here are more likely to quit compared to Research & Development or other departments.
 
 ## Are employees of different gender paid equally in all departments? 
 

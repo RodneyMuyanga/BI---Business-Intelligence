@@ -3,6 +3,7 @@ import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
 import seaborn as sns
+import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier, plot_tree
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
@@ -25,7 +26,7 @@ class EmployeeAttritionAnalysis:
 
     def interpret_correlation(self):
         corr = self.df.corr()["Attrition"].sort_values(key=abs, ascending=False)
-        strongest_feature = corr.index[1]  # index 0 is 'Attrition' itself
+        strongest_feature = corr.index[1]
         strongest_corr = corr.iloc[1]
 
         if strongest_corr > 0:
@@ -82,7 +83,7 @@ class EmployeeAttritionAnalysis:
         y = self.df['Attrition']
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
-        # Decision Tree with class_weight balanced to handle imbalance
+        
         clf = DecisionTreeClassifier(criterion='entropy', max_depth=5, random_state=42, class_weight='balanced')
         clf.fit(X_train, y_train)
         y_pred = clf.predict(X_test)
@@ -111,10 +112,34 @@ class EmployeeAttritionAnalysis:
         plot_tree(clf, filled=True, feature_names=X.columns, class_names=['No Attrition', 'Attrition'], ax=ax, rounded=True)
         st.pyplot(fig)
 
+    def show_entropy_plot(self):
+        st.write("### Entropy Curve")
+        st.markdown("""
+Entropy measures the unpredictability or impurity of a node in decision trees.  
+- Entropy is **0** when all samples belong to one class (pure node).  
+- Entropy is **1** when classes are perfectly mixed (e.g., 50/50).  
+        """)
+
+        def compute_entropy(p):
+            if p == 0 or p == 1:
+                return 0
+            return -p * np.log2(p) - (1 - p) * np.log2(1 - p)
+
+        p_values = np.linspace(0, 1, 200)
+        entropy_values = [compute_entropy(p) for p in p_values]
+
+        fig, ax = plt.subplots()
+        ax.plot(p_values, entropy_values, color='darkorange', linewidth=2)
+        ax.set_title("Entropy vs. Class Probability", fontsize=14)
+        ax.set_xlabel("Proportion of Class 1 (Attrition = Yes)", fontsize=12)
+        ax.set_ylabel("Entropy (bits)", fontsize=12)
+        ax.grid(True)
+        st.pyplot(fig)
+
 def main():
     st.title("Employee Attrition Analysis")
 
-    data_path = 'WA_Fn-UseC_-HR-Employee-Attrition.csv'
+    data_path = '../data/WA_Fn-UseC_-HR-Employee-Attrition.csv'
     analysis = EmployeeAttritionAnalysis(data_path)
 
     st.sidebar.header("Select Analysis")
@@ -122,7 +147,8 @@ def main():
         "Data Preview",
         "Missing Values",
         "Correlation with Attrition",
-        "Train and Predict"
+        "Train and Predict",
+        "Entropy Visualization"
     ])
 
     if choice == "Data Preview":
@@ -133,6 +159,8 @@ def main():
         analysis.show_attrition_correlation()
     elif choice == "Train and Predict":
         analysis.train_and_predict()
+    elif choice == "Entropy Visualization":
+        analysis.show_entropy_plot()
 
 if __name__ == "__main__":
     main()
