@@ -7,6 +7,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier, plot_tree
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
+import joblib
 
 class EmployeeAttritionAnalysis:
     def __init__(self, data_path):
@@ -83,10 +84,12 @@ class EmployeeAttritionAnalysis:
         y = self.df['Attrition']
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
-        
         clf = DecisionTreeClassifier(criterion='entropy', max_depth=5, random_state=42, class_weight='balanced')
         clf.fit(X_train, y_train)
         y_pred = clf.predict(X_test)
+
+        # Save the model after training
+        joblib.dump(clf, "decision_tree_model.joblib")
 
         accuracy = accuracy_score(y_test, y_pred)
         st.write(f"### Accuracy: {accuracy * 100:.2f}%")
@@ -136,6 +139,40 @@ Entropy measures the unpredictability or impurity of a node in decision trees.
         ax.grid(True)
         st.pyplot(fig)
 
+    def load_model(self, model_path="decision_tree_model.joblib"):
+        try:
+            model = joblib.load(model_path)
+            return model
+        except Exception as e:
+            st.error(f"Failed to load model: {e}")
+            return None
+
+    def predict_user_input(self, clf):
+        st.write("### Employee Attrition Prediction")
+
+        # Example user inputs (adjust these to features available in your dataset)
+        overtime = st.selectbox("Does employee work overtime?", ["No", "Yes"])
+        monthly_income = st.number_input("Monthly Income", min_value=0, step=100)
+        total_working_years = st.number_input("Total Working Years", min_value=0, step=1)
+
+        overtime_val = 1 if overtime == "Yes" else 0
+
+        # Prepare input data with all required features as zeros
+        input_data = pd.DataFrame(np.zeros((1, len(self.df.columns)-1)), columns=self.df.drop("Attrition", axis=1).columns)
+        if 'OverTime_Yes' in input_data.columns:
+            input_data['OverTime_Yes'] = overtime_val
+        if 'MonthlyIncome' in input_data.columns:
+            input_data['MonthlyIncome'] = monthly_income
+        if 'TotalWorkingYears' in input_data.columns:
+            input_data['TotalWorkingYears'] = total_working_years
+
+        # Predict
+        prediction = clf.predict(input_data)[0]
+        proba = clf.predict_proba(input_data)[0][1]
+
+        st.write(f"Prediction: {'Attrition' if prediction == 1 else 'No Attrition'}")
+        st.write(f"Probability of attrition: {proba:.2f}")
+
 def main():
     st.title("Employee Attrition Analysis")
 
@@ -148,7 +185,8 @@ def main():
         "Missing Values",
         "Correlation with Attrition",
         "Train and Predict",
-        "Entropy Visualization"
+        "Entropy Visualization",
+        "Predict Attrition (User Input)"
     ])
 
     if choice == "Data Preview":
@@ -161,6 +199,10 @@ def main():
         analysis.train_and_predict()
     elif choice == "Entropy Visualization":
         analysis.show_entropy_plot()
+    elif choice == "Predict Attrition (User Input)":
+        clf = analysis.load_model()
+        if clf:
+            analysis.predict_user_input(clf)
 
 if __name__ == "__main__":
     main()
