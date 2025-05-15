@@ -48,7 +48,7 @@ Indekset tager udgangspunkt i 2021 = 100, og vi ser en jævn stigning i alle reg
 Dataene er baseret på de officielle kvartalstal fra Danmarks Statistik.
 Visualiseringen gør det nemt at sammenligne udviklingen og se hvor huslejen stiger mest og hvor meget den er steget.
 
-
+# MINI PROJECT 3: MACHINE LEARNING FOR ANALYSIS AND PREDICTION  
 ## Which machine learning methods did you choose to apply in the application and why? 
 ### Supervised Machine Learning: Salary Prediction (Linear Regression)
 We applied linear regression to predict the monthly income of employees. Linear regression was chosen because it is a simple and interpretable supervised learning method that allows us to analyze the relationship between employee attributes and salary. The method was also explicitly required by the assignment.
