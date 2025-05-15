@@ -48,3 +48,36 @@ Indekset tager udgangspunkt i 2021 = 100, og vi ser en jævn stigning i alle reg
 Dataene er baseret på de officielle kvartalstal fra Danmarks Statistik.
 Visualiseringen gør det nemt at sammenligne udviklingen og se hvor huslejen stiger mest og hvor meget den er steget.
 
+
+## Which machine learning methods did you choose to apply in the application and why? 
+### Supervised Machine Learning: Salary Prediction (Linear Regression)
+We applied linear regression to predict the monthly income of employees. Linear regression was chosen because it is a simple and interpretable supervised learning method that allows us to analyze the relationship between employee attributes and salary. The method was also explicitly required by the assignment.
+
+## How accurate is your solution of prediction? Explain the meaning of the quality measures. 
+### Supervised Machine Learning: Salary Prediction (Linear Regression)
+The linear regression model achieved an R²-score of 0.89, meaning it explained 89% of the variance in income in the dataset. The Mean Squared Error (MSE) was approximately 2.3 million (in dataset units).
+
+R² (coefficient of determination) shows how much of the variance in salary can be explained by the model’s input features. A score of 0.89 is considered strong.
+
+Mean Squared Error (MSE) is the average of the squared differences between the actual and predicted values. A lower MSE means the model is more accurate.
+
+## Which are the most decisive factors for quitting a job? Why do people quit their job? 
+### Supervised Machine Learning: Salary Prediction (Linear Regression)
+The linear model sometimes gave unrealistically low salary predictions, especially for experienced profiles. This may be due to linear regression’s limitations in capturing non-linear relationships and overlapping features (e.g., age and total working years). A more advanced model like Random Forest Regressor could offer better results. Additionally, normalizing input values and selecting more relevant features might improve accuracy.
+
+## What could be done for further improvement of the accuracy of the models? 
+
+## Which work positions and departments are in higher risk of losing employees?
+
+## Are employees of different gender paid equally in all departments? 
+
+## Do the family status and the distance from work influence the work-life balance? 
+
+## Does education make people happy (satisfied from the work)? 
+
+## Which were the challenges in the project development? 
+### Supervised Machine Learning: Salary Prediction (Linear Regression)
+One challenge was understanding why some variables had negative coefficients, even when they intuitively seemed to have a positive impact on salary. This was caused by feature overlap (e.g., age and experience) confusing the linear model. Another challenge was that model performance metrics like R² looked good, while the real-life predictions didn’t always make sense. To address this, we added visualizations (scatterplots, boxplots, correlation heatmaps) to help interpret the data more clearly.
+
+Note: The salary predictions are based on a synthetic dataset from IBM, and values are not linked to any real currency. Units are relative and only used for analysis purposes.
+
