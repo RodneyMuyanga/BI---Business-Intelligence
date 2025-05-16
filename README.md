@@ -111,10 +111,26 @@ Positions such as Sales Representatives and Laboratory Technicians have positive
 The Sales Department shows a positive correlation with attrition, suggesting employees here are more likely to quit compared to Research & Development or other departments.
 
 ## Are employees of different gender paid equally in all departments? 
+Not exactly.
+There are some differences in average pay between men and women, especially in departments like Sales and R&D.
+
+This may be due to:
+
+    Different job roles or levels (e.g., more men in senior positions)
+
+    Uneven promotion rates or hiring patterns
+
+A full conclusion would require deeper statistical testing, but the data suggests a possible gender pay gap in some areas.
 
 ## Do the family status and the distance from work influence the work-life balance? 
+Yes, both marital status and distance from home affect work-life balance scores.
+
+Long commutes and single status correlate with lower balance.
 
 ## Does education make people happy (satisfied from the work)? 
+Not always. Higher education does not guarantee higher job satisfaction.
+
+Environment and role matters more.
 
 ## Which were the challenges in the project development? 
 ### Supervised Machine Learning: Salary Prediction (Linear Regression)
